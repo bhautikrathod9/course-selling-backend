@@ -1,9 +1,9 @@
 const express = require('express');
 const dotenv = require('dotenv');
-const bodyParser = require('body-parser');
 
 const connectDB = require('./config/db')
-const authRoutes = require('./routes/authRoutes')
+const authRoutes = require('./routes/user')
+const adminRoutes = require('./routes/admin')
 
 dotenv.config()
 
@@ -14,7 +14,8 @@ app.use(express.json());
 connectDB();
 
 app.use('/auth', authRoutes)
-// app.use('', authRoutes)
+app.use('', adminRoutes)
+app.use('/auth', adminRoutes)
 
 app.listen(PORT, () => {
     console.log("server is live on port :", PORT);
