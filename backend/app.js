@@ -6,7 +6,6 @@ const authRoutes = require('./routes/user')
 const adminRoutes = require('./routes/admin')
 const purchaseRoute = require('./routes/course')
 
-
 dotenv.config()
 
 const app = express();

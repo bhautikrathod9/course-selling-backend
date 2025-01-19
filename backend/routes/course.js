@@ -1,7 +1,8 @@
 const express = require('express')
 const jwt = require('jsonwebtoken')
-const { purchaseModel } = require('../models/db')
+const { purchaseModel, courseModel } = require('../models/db')
 const { userMiddleware } = require('../middleware/user')
+const { adminMiddleware } = require('../middleware/admin')
 
 const router = express.Router();
 
@@ -21,5 +22,18 @@ router.post('/purchases',userMiddleware, async (req, res) => {
         purchaseId: purchases._id
     })
 })
+
+router.get('/preview', adminMiddleware, async (req, res) => {
+    try {
+        const courses = await courseModel.find({}); // Corrected: removed 'new'
+
+        res.json({
+            courses
+        });
+    } catch (error) {
+        console.error('Error fetching courses:', error);
+        res.status(500).json({ message: 'Error fetching courses', error: error.message });
+    }
+});
 
 module.exports = router
